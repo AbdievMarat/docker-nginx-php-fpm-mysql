@@ -12,7 +12,7 @@ services:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         ports:
-            - "8001:80"
+            - "8002:80"
 
     app:
         build:
@@ -24,6 +24,22 @@ services:
         restart: unless-stopped
         working_dir: /var/www
         container_name: app
+        networks:
+            - app-network
+    db:
+        image: mysql:8.0.22  
+        container_name: db    
+        restart: unless-stopped   
+        tty: true   
+        environment:      
+            MYSQL_DATABASE: yii        
+            MYSQL_ROOT_PASSWORD: ma123            
+            MYSQL_PASSWORD: 123456        
+            MYSQL_USER: root        
+            SERVICE_TAGS: dev           
+            SERVICE_NAME: mysql
+        ports:
+            - "8001:3306" 
         networks:
             - app-network
 

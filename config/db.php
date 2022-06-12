@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'sqlite:'.__DIR__.'/sqlggite.db',
+    'dsn' => 'mysql:host=db:3306;dbname=yii',
     'username' => 'root',
-    'password' => '',
+    'password' => 'ma123',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
