@@ -1,0 +1,32 @@
+version: '3.0'
+
+services:
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        networks:
+            - app-network
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        ports:
+            - "8001:80"
+
+    app:
+        build:
+            context: .
+        volumes:
+            - ./:/var/www
+            - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        tty: true
+        restart: unless-stopped
+        working_dir: /var/www
+        container_name: app
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
